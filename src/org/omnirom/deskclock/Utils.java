@@ -836,10 +836,11 @@ public class Utils {
     }
 
     public static boolean isSpotifyPluginInstalled(final Context context) {
-        if (!isNewSpotifyPluginInstalled(context)) {
+        return false;
+        /*if (!isNewSpotifyPluginInstalled(context)) {
             return isOldSpotifyPluginInstalled(context);
         }
-        return true;
+        return true;*/
     }
 
     public static boolean isSpotifyAlarm(AlarmInstance instance, boolean preAlarm) {
