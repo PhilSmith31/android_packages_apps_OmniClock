@@ -49,13 +49,13 @@ import android.widget.TextView;
 
 import com.wdullaer.materialdatetimepicker.HapticFeedbackController;
 import com.wdullaer.materialdatetimepicker.R;
-import com.wdullaer.materialdatetimepicker.TypefaceHelper;
 import com.wdullaer.materialdatetimepicker.Utils;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout.OnValueSelectedListener;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -86,6 +86,7 @@ public class TimePickerDialog extends DialogFragment implements
     private static final String KEY_OK_STRING = "ok_string";
     private static final String KEY_CANCEL_RESID = "cancel_resid";
     private static final String KEY_CANCEL_STRING = "cancel_string";
+    private static final String KEY_THEME_ID = "theme_id";
 
     public static final int HOUR_INDEX = 0;
     public static final int MINUTE_INDEX = 1;
@@ -159,6 +160,7 @@ public class TimePickerDialog extends DialogFragment implements
     private String mSelectSeconds;
 
     private boolean mSpinnerInit;
+    private Button mNowButton;
 
     /**
      * The callback interface used to indicate the user is done filling in
@@ -489,6 +491,7 @@ public class TimePickerDialog extends DialogFragment implements
             mOkString = savedInstanceState.getString(KEY_OK_STRING);
             mCancelResid = savedInstanceState.getInt(KEY_CANCEL_RESID);
             mCancelString = savedInstanceState.getString(KEY_CANCEL_STRING);
+            mThemeId = savedInstanceState.getInt(KEY_THEME_ID);
         }
     }
 
@@ -594,7 +597,6 @@ public class TimePickerDialog extends DialogFragment implements
             }
         });
         mOkButton.setOnKeyListener(keyboardListener);
-        mOkButton.setTypeface(TypefaceHelper.get(context, "Roboto-Medium"));
         if(mOkString != null) mOkButton.setText(mOkString);
         else mOkButton.setText(mOkResid);
 
@@ -606,10 +608,22 @@ public class TimePickerDialog extends DialogFragment implements
                 if (getDialog() != null) getDialog().cancel();
             }
         });
-        mCancelButton.setTypeface(TypefaceHelper.get(context, "Roboto-Medium"));
         if(mCancelString != null) mCancelButton.setText(mCancelString);
         else mCancelButton.setText(mCancelResid);
         mCancelButton.setVisibility(isCancelable() ? View.VISIBLE : View.GONE);
+
+        mNowButton = (Button) view.findViewById(R.id.now);
+        mNowButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar time = Calendar.getInstance();
+                time.setTimeInMillis(System.currentTimeMillis());
+                time.get(Calendar.HOUR_OF_DAY);
+                mInitialTime = new Timepoint(time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE));
+                mTimePicker.setTime(mInitialTime);
+                updateDisplay(false);
+            }
+        });
 
         // Enable or disable the AM/PM view.
         mAmPmHitspace = view.findViewById(R.id.ampm_hitspace);
@@ -768,8 +782,9 @@ public class TimePickerDialog extends DialogFragment implements
         // Set the theme at the end so that the initialize()s above don't counteract the theme.
         mOkButton.setTextColor(mAccentColor);
         mCancelButton.setTextColor(mAccentColor);
+        mNowButton.setTextColor(mAccentColor);
         timePickerHeader.setBackgroundColor(mAccentColor);
-        view.findViewById(R.id.time_display_background).setBackgroundColor(mAccentColor);
+        view.findViewById(R.id.time_display_background).setBackgroundColor(mPrimaryColor);
         view.findViewById(R.id.time_display).setBackgroundColor(mPrimaryColor);
 
         if(getDialog() == null) {
@@ -866,6 +881,7 @@ public class TimePickerDialog extends DialogFragment implements
             outState.putString(KEY_OK_STRING, mOkString);
             outState.putInt(KEY_CANCEL_RESID, mCancelResid);
             outState.putString(KEY_CANCEL_STRING, mCancelString);
+            outState.putInt(KEY_THEME_ID, mThemeId);
         }
     }
 

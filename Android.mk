@@ -7,7 +7,6 @@ LOCAL_JAVA_LIBRARIES := org.apache.http.legacy
 
 src_dirs := src MaterialDateTimePicker/src
 res_dirs := res MaterialDateTimePicker/res
-asset_dirs := MaterialDateTimePicker/assets
 
 LOCAL_STATIC_JAVA_LIBRARIES := android-support-v13
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v4
@@ -15,7 +14,6 @@ LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-cardview
 
 LOCAL_SRC_FILES := $(call all-java-files-under, $(src_dirs))
 LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(res_dirs))
-LOCAL_ASSET_DIR := $(addprefix $(LOCAL_PATH)/, $(asset_dirs))
 
 LOCAL_PACKAGE_NAME := OmniClockOSS
 

@@ -55,5 +55,5 @@
             android:focusableInTouchMode="true" />
     </LinearLayout>
 
-    <include layout="@layout/mdtp_done_button" />
+    <include layout="@layout/mdtp_done_button_time" />
 </LinearLayout>
