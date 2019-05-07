@@ -28,7 +28,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.CheckBoxPreference;
+import android.preference.TwoStatePreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -105,8 +105,6 @@ public class SettingsActivity extends PreferenceActivity
             "timer_alarm_increase_volume_speed";
     public static final String KEY_WEEK_START =
             "week_start";
-    public static final String KEY_FULLSCREEN_ALARM_SETTINGS =
-            "fullscreen_alarm_settings";
     private static final String KEY_ALARM_ACTION_WIRELESS_HEADER =
             "alarm_action_wireless_header";
     private static final String KEY_ALARM_ACTION_CATEGORY = "alarm_action_category";
@@ -136,12 +134,12 @@ public class SettingsActivity extends PreferenceActivity
     private long mTime;
     private RingtonePreference mTimerAlarmPref;
     private final Handler mHandler = new Handler();
-    private CheckBoxPreference mCustomTimerAlarm;
+    private TwoStatePreference mCustomTimerAlarm;
     private NumberPickerPreference mSnoozeMinutes;
     private AutoSilencePickerPreference mSilenceMinutes;
-    private CheckBoxPreference mAnalogShowDateAndTime;
-    private CheckBoxPreference mAnalogShowNumbers;
-    private CheckBoxPreference mAnalogShowTicks;
+    private TwoStatePreference mAnalogShowDateAndTime;
+    private TwoStatePreference mAnalogShowNumbers;
+    private TwoStatePreference mAnalogShowTicks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,9 +185,9 @@ public class SettingsActivity extends PreferenceActivity
         updateSilenceAfterSummary(mSilenceMinutes, mSilenceMinutes.getValue());
         mSilenceMinutes.setOnPreferenceChangeListener(this);
 
-        mAnalogShowDateAndTime = (CheckBoxPreference) findPreference(KEY_ANALOG_SHOW_DATE);
-        mAnalogShowNumbers = (CheckBoxPreference) findPreference(KEY_ANALOG_SHOW_NUMBERS);
-        mAnalogShowTicks = (CheckBoxPreference) findPreference(KEY_ANALOG_SHOW_TICKS);
+        mAnalogShowDateAndTime = (TwoStatePreference) findPreference(KEY_ANALOG_SHOW_DATE);
+        mAnalogShowNumbers = (TwoStatePreference) findPreference(KEY_ANALOG_SHOW_NUMBERS);
+        mAnalogShowTicks = (TwoStatePreference) findPreference(KEY_ANALOG_SHOW_TICKS);
 
         updateClockStyleDeps(Utils.isClockStyleAnalog(this));
 
@@ -233,7 +231,7 @@ public class SettingsActivity extends PreferenceActivity
             listPref.setSummary(listPref.getEntries()[idx]);
             notifyHomeTimeZoneChanged();
         } else if (KEY_AUTO_HOME_CLOCK.equals(pref.getKey())) {
-            boolean state = ((CheckBoxPreference) pref).isChecked();
+            boolean state = ((TwoStatePreference) pref).isChecked();
             Preference homeTimeZone = findPreference(KEY_HOME_TZ);
             homeTimeZone.setEnabled(!state);
             notifyHomeTimeZoneChanged();
@@ -326,7 +324,7 @@ public class SettingsActivity extends PreferenceActivity
         listPref.setOnPreferenceChangeListener(this);
 
         Preference pref = findPreference(KEY_AUTO_HOME_CLOCK);
-        boolean state =((CheckBoxPreference) pref).isChecked();
+        boolean state =((TwoStatePreference) pref).isChecked();
         pref.setOnPreferenceChangeListener(this);
 
         listPref = (ListPreference)findPreference(KEY_HOME_TZ);
@@ -340,13 +338,12 @@ public class SettingsActivity extends PreferenceActivity
 
         final SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         final boolean hasAccelSensor = sensorManager.getSensorList(Sensor.TYPE_ACCELEROMETER).size() >= 1;
-        final boolean hasOrientationSensor = sensorManager.getSensorList(Sensor.TYPE_ORIENTATION).size() >= 1;
         final boolean hasProxiSensor = sensorManager.getSensorList(Sensor.TYPE_PROXIMITY).size() >= 1;
         final PreferenceCategory alarmCategory = (PreferenceCategory) findPreference(
-                        KEY_FULLSCREEN_ALARM_SETTINGS);
+                        KEY_ALARM_ACTION_CATEGORY);
 
         listPref = (ListPreference) findPreference(KEY_FLIP_ACTION);
-        if (hasOrientationSensor) {
+        if (hasAccelSensor) {
             listPref.setSummary(listPref.getEntry());
             listPref.setOnPreferenceChangeListener(this);
         } else {
@@ -389,7 +386,7 @@ public class SettingsActivity extends PreferenceActivity
         listPref.setSummary(listPref.getEntry());
         listPref.setOnPreferenceChangeListener(this);
 
-        mCustomTimerAlarm = (CheckBoxPreference) findPreference(KEY_TIMER_ALARM_CUSTOM);
+        mCustomTimerAlarm = (TwoStatePreference) findPreference(KEY_TIMER_ALARM_CUSTOM);
 
         listPref = (ListPreference) findPreference(KEY_PRE_ALARM_NOTIFICATION_TIME);
         listPref.setSummary(listPref.getEntry());

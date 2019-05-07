@@ -42,21 +42,21 @@
     <PreferenceCategory
         android:key="analog_clock_settings"
         android:title="@string/analog_clock_settings">
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="show_date_and_alarm"
             android:summary="@string/show_date_and_alarm_summary"
             android:title="@string/show_date_and_alarm_title"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="show_numbers"
             android:summary="@string/show_numbers_summary"
             android:title="@string/show_numbers_title"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="show_ticks"
             android:summary="@string/show_ticks_summary"
             android:title="@string/show_ticks_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/time_zone_settings">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="automatic_home_clock"
             android:summary="@string/automatic_home_clock_summary"
@@ -80,7 +80,7 @@
             android:dialogTitle="@string/auto_silence_title"
             android:key="silence_after_minutes"
             android:title="@string/auto_silence_title" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:key="snooze_on_silence"
             android:summary="@string/snooze_on_silence_summary"
             android:title="@string/snooze_on_silence_title" />
@@ -103,7 +103,7 @@
             android:entryValues="@array/volume_increase_speed_values"
             android:key="volume_increase_speed"
             android:title="@string/volume_increase_speed_title" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="pre_alarm_dismiss_all"
             android:summary="@string/pre_alarm_dismiss_all_summary"
@@ -117,12 +117,12 @@
             android:title="@string/audio_stream_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/notification_settings" >
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="wear_notification"
             android:summary="@string/wear_notification_summary"
             android:title="@string/wear_notification_title" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="pre_alarm_notification_show"
             android:title="@string/pre_alarm_notification_show_title"
@@ -135,7 +135,7 @@
             android:key="pre_alarm_notification_time"
             android:title="@string/pre_alarm_notification_time_title"
             android:dependency="pre_alarm_notification_show"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="vibrate_notification"
             android:summary="@string/vibrate_notification_summary"
@@ -144,18 +144,18 @@
     <PreferenceCategory
         android:title="@string/fullscreen_alarm_settings"
         android:key="fullscreen_alarm_settings">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="keep_screen_on"
             android:summary="@string/keep_screen_on_summary"
             android:title="@string/keep_screen_on_title" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="make_screen_dark"
             android:summary="@string/make_screen_dark_summary"
             android:title="@string/make_screen_dark_title"
             android:dependency="keep_screen_on"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="show_background_image"
             android:summary="@string/show_background_image_summary"
@@ -198,7 +198,7 @@
             android:title="@string/wave_action_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/timer_settings" >
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="timer_alarm_custom"
             android:summary="@string/timer_alarm_custom_summary"
@@ -210,11 +210,11 @@
             android:showSilent="true"
             android:showDefault="true"
             android:dependency="timer_alarm_custom" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="timer_alarm_vibrate"
             android:title="@string/alarm_vibrate" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="timer_alarm_increase_volume"
             android:title="@string/alarm_increasing_volume" />
